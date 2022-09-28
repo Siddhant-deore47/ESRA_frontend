@@ -185,22 +185,6 @@ function ReportAccident() {
                         Get Live Location
                       </div>
                     </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="invalidCheck"
-                        required
-                      />
-                      <label class="form-check-label">
-                        I confirm that all data are correct
-                      </label>
-                      <div class="invalid-feedback">
-                        Please confirm that the entered data are all correct!
-                      </div>
-                    </div>
-
                     <div class="form-button mt-3">
                       <button
                         id="submit"

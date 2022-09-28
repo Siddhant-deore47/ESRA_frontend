@@ -31,12 +31,6 @@ function ViewHospital() {
     });
   }, []);
 
-  const getList = () => {
-    GetHospitalList().then((res) => {
-      setHospitalList(res.data);
-    });
-  };
-
   const [login, setLogin] = useState(false);
   const logout = () => {
     loggedOut(() => {
