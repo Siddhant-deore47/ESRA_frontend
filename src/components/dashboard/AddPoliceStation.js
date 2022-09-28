@@ -15,23 +15,28 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router";
-import { register1 } from "../../services/userServices";
+import { AddPoliceStation } from "../../services/userServices";
+import { loggedOut } from "../../auth/auth";
 
-function AddPoliceStation() {
+function AddNewPoliceStation() {
   const [data, setData] = useState({
-    fullName: "",
-    country: "",
-    mobileNumber: "",
-    alternateNumber: "",
-    state: "",
-    district: "",
+    name: "",
     email: "",
-    city: "",
-    longitude: "",
-    latitude: "",
-
-    pin: "",
-    address: "",
+    password: "",
+    mobileNo: "",
+    altMobileNo: "",
+    policeStationAddress: {
+      city: "",
+      district: "",
+      state: "",
+      country: "",
+      streetLine: "",
+      pinCode: "",
+    },
+    coordinates: {
+      latitude: "",
+      longitude: "",
+    },
   });
   const InputEvent = (event) => {
     const { name, value } = event.target;
@@ -43,22 +48,44 @@ function AddPoliceStation() {
       };
     });
   };
+  const onChangeAddress = (event) => {
+    setData({
+      ...data,
+      policeStationAddress: {
+        ...data.policeStationAddress,
+        [event.target.name]: event.target.value,
+      },
+    });
+  };
+  const onChangeLocation = (event) => {
+    setData({
+      ...data,
+      coordinates: {
+        ...data.coordinates,
+        [event.target.name]: event.target.value,
+      },
+    });
+  };
 
   const resetData = () => {
     setData({
-      fullName: "",
-      country: "",
-      mobileNumber: "",
-      alternateNumber: "",
-      state: "",
-      district: "",
+      name: "",
       email: "",
-      city: "",
-      longitude: "",
-      latitude: "",
-
-      pin: "",
-      address: "",
+      password: "",
+      mobileNo: "",
+      altMobileNo: "",
+      policeStationAddress: {
+        city: "",
+        district: "",
+        state: "",
+        country: "",
+        streetLine: "",
+        pinCode: "",
+      },
+      coordinates: {
+        latitude: "",
+        longitude: "",
+      },
     });
   };
 
@@ -66,25 +93,29 @@ function AddPoliceStation() {
     e.preventDefault();
     console.log(data);
 
-    register1(data)
+    AddPoliceStation(data)
       .then((resp) => {
         console.log(resp);
         console.log("success log");
-        toast.success("user registered");
+        toast.success("Police Station registered");
         setData({
-          fullName: "",
-          country: "",
-          mobileNumber: "",
-          alternateNumber: "",
-          state: "",
-          district: "",
+          name: "",
           email: "",
-          city: "",
-          longitude: "",
-          latitude: "",
-
-          pin: "",
-          address: "",
+          password: "",
+          mobileNo: "",
+          altMobileNo: "",
+          policeStationAddress: {
+            city: "",
+            district: "",
+            state: "",
+            country: "",
+            streetLine: "",
+            pinCode: "",
+          },
+          coordinates: {
+            latitude: "",
+            longitude: "",
+          },
         });
       })
       .catch((error) => {
@@ -94,6 +125,14 @@ function AddPoliceStation() {
       });
   };
   const navigate = useNavigate();
+
+  const [login, setLogin] = useState(false);
+  const logout = () => {
+    loggedOut(() => {
+      setLogin(false);
+      navigate("/");
+    });
+  };
 
   return (
     <div>
@@ -117,7 +156,7 @@ function AddPoliceStation() {
                 <ListItem button disablePadding>
                   <ListItemButton
                     onClick={() => {
-                      navigate("/dashboard");
+                      navigate("/admin/dashboard");
                     }}
                   >
                     <ListItemIcon></ListItemIcon>
@@ -141,11 +180,7 @@ function AddPoliceStation() {
               <Divider />
               <List>
                 <ListItem button disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      navigate("/");
-                    }}
-                  >
+                  <ListItemButton onClick={logout}>
                     <ListItemIcon></ListItemIcon>
                     <ListItemText primary="Logout" />
                   </ListItemButton>
@@ -172,23 +207,20 @@ function AddPoliceStation() {
                             >
                               <div className="card-body p-2">
                                 <h2 className="text-uppercase text-center mb-4">
-                                  <strong>Add Police Station</strong>
+                                  <strong>Add New Police Station</strong>
                                 </h2>
 
                                 <form onSubmit={formSubmit}>
                                   <div className="row">
                                     <div className="col-5">
-                                      <label
-                                        className="form-label"
-                                        for="fullName1"
-                                      >
+                                      <label className="form-label" for="name1">
                                         Police Station Name
                                       </label>
                                       <input
                                         type="text"
-                                        id="fullName1"
-                                        name="fullName"
-                                        value={data.fullName}
+                                        id="name1"
+                                        name="name"
+                                        value={data.name}
                                         onChange={InputEvent}
                                         className="form-control form-control-sm"
                                         required
@@ -205,8 +237,10 @@ function AddPoliceStation() {
                                         type="text"
                                         id="country1"
                                         name="country"
-                                        value={data.country}
-                                        onChange={InputEvent}
+                                        value={
+                                          data.policeStationAddress.country
+                                        }
+                                        onChange={onChangeAddress}
                                         className="form-control form-control-sm"
                                         required
                                       />
@@ -216,15 +250,15 @@ function AddPoliceStation() {
                                     <div className="col-5">
                                       <label
                                         className="form-label"
-                                        for="mobileNumber1"
+                                        for="mobile1"
                                       >
                                         Mobile Number
                                       </label>
                                       <input
                                         type="text"
-                                        id="mobileNumber1"
-                                        name="mobileNumber"
-                                        value={data.mobileNumber}
+                                        id="mobile1"
+                                        name="mobileNo"
+                                        value={data.mobileNo}
                                         onChange={InputEvent}
                                         className="form-control form-control-sm"
                                         required
@@ -241,8 +275,8 @@ function AddPoliceStation() {
                                         type="text"
                                         id="state1"
                                         name="state"
-                                        value={data.state}
-                                        onChange={InputEvent}
+                                        value={data.policeStationAddress.state}
+                                        onChange={onChangeAddress}
                                         className="form-control form-control-sm"
                                         required
                                       />
@@ -252,15 +286,15 @@ function AddPoliceStation() {
                                     <div className="col-5">
                                       <label
                                         className="form-label"
-                                        for="alternateNumber"
+                                        for="altMobileNo"
                                       >
                                         Alternate Mobile Number
                                       </label>
                                       <input
                                         type="text"
-                                        id="alternateNumber"
-                                        name="alternateNumber"
-                                        value={data.alternateNumber}
+                                        id="altMobileNo"
+                                        name="altMobileNo"
+                                        value={data.altMobileNo}
                                         onChange={InputEvent}
                                         className="form-control form-control-sm"
                                         required
@@ -274,8 +308,8 @@ function AddPoliceStation() {
                                         type="text"
                                         id="city1"
                                         name="city"
-                                        value={data.city}
-                                        onChange={InputEvent}
+                                        value={data.policeStationAddress.city}
+                                        onChange={onChangeAddress}
                                         className="form-control form-control-sm"
                                         required
                                       />
@@ -293,22 +327,29 @@ function AddPoliceStation() {
                                         type="text"
                                         id="district1"
                                         name="district"
-                                        value={data.district}
-                                        onChange={InputEvent}
+                                        value={
+                                          data.policeStationAddress.district
+                                        }
+                                        onChange={onChangeAddress}
                                         className="form-control form-control-sm"
                                         required
                                       />
                                     </div>
                                     <div className="col-5">
-                                      <label className="form-label" for="pin1">
+                                      <label
+                                        className="form-label"
+                                        for="pinCode1"
+                                      >
                                         Pin
                                       </label>
                                       <input
                                         type="number"
-                                        id="pin1"
-                                        name="pin"
-                                        value={data.pin}
-                                        onChange={InputEvent}
+                                        id="pinCode1"
+                                        name="pinCode"
+                                        value={
+                                          data.policeStationAddress.pinCode
+                                        }
+                                        onChange={onChangeAddress}
                                         className="form-control form-control-sm"
                                         required
                                       />
@@ -336,16 +377,18 @@ function AddPoliceStation() {
                                     <div className="col-5">
                                       <label
                                         className="form-label"
-                                        for="address1"
+                                        for="streetLine1"
                                       >
                                         Address
                                       </label>
                                       <input
                                         type="text"
-                                        id="address1"
-                                        name="address"
-                                        value={data.address}
-                                        onChange={InputEvent}
+                                        id="streetLine1"
+                                        name="streetLine"
+                                        value={
+                                          data.policeStationAddress.streetLine
+                                        }
+                                        onChange={onChangeAddress}
                                         className="form-control form-control-sm"
                                         required
                                       />
@@ -363,8 +406,8 @@ function AddPoliceStation() {
                                         type="text"
                                         id="latitude"
                                         name="latitude"
-                                        value={data.latitude}
-                                        onChange={InputEvent}
+                                        value={data.coordinates.latitude}
+                                        onChange={onChangeLocation}
                                         className="form-control form-control-sm"
                                         required
                                       />
@@ -380,7 +423,24 @@ function AddPoliceStation() {
                                         type="text"
                                         id="longitude"
                                         name="longitude"
-                                        value={data.longitude}
+                                        value={data.coordinates.longitude}
+                                        onChange={onChangeLocation}
+                                        className="form-control form-control-sm"
+                                        required
+                                      />
+                                    </div>
+                                    <div className="col-5">
+                                      <label
+                                        className="form-label"
+                                        for="password"
+                                      >
+                                        Password
+                                      </label>
+                                      <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        value={data.password}
                                         onChange={InputEvent}
                                         className="form-control form-control-sm"
                                         required
@@ -405,11 +465,11 @@ function AddPoliceStation() {
                                   </div>
 
                                   {/* <p className="text-center text-muted mt-2 mb-0">
-                            Have already an account?{" "}
-                            <a href="#!" className="fw-bold text-body">
-                              <u>Login here</u>
-                            </a>
-                          </p> */}
+                                Have already an account?{" "}
+                                <a href="#!" className="fw-bold text-body">
+                                  <u>Login here</u>
+                                </a>
+                              </p> */}
                                 </form>
                               </div>
                             </div>
@@ -428,4 +488,4 @@ function AddPoliceStation() {
   );
 }
 
-export default AddPoliceStation;
+export default AddNewPoliceStation;

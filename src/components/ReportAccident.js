@@ -60,6 +60,7 @@ function ReportAccident() {
         console.log(data);
         toast.success("Reported !");
         console.log(responseData);
+        localStorage.setItem("nearestHospital", responseData);
         localStorage.setItem("nearestHospitalName", responseData.name);
         localStorage.setItem("nearestHospitalEmail", responseData.email);
         localStorage.setItem("nearestHospitalMobile", responseData.mobile);

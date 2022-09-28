@@ -16,7 +16,10 @@ import ViewHospital from "./components/dashboard/ViewHospital";
 import ViewPoliceStation from "./components/dashboard/ViewPoliceStation";
 import ViewFeedback from "./components/dashboard/ViewFeedback";
 import ViewReportList from "./components/dashboard/ViewReportList";
-import { AdminPrivateRoute } from "./components/AdminPrivateRoute";
+import {
+  AdminPrivateRoute,
+  ReportPrivateRoute,
+} from "./components/AdminPrivateRoute";
 import MyProfile from "./components/dashboard/MyProfile";
 function App() {
   return (
@@ -32,6 +35,8 @@ function App() {
             exact
             element={<ReportAccident />}
           ></Route>
+          <Route path="/nearestHospital" element={<NearestHospital />}></Route>
+
           <Route path="/feedback" exact element={<Feedback />}></Route>
           <Route path="/register" exact element={<Register />}></Route>
           <Route path="/signin" exact element={<SignIn />}></Route>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
@@ -13,9 +13,37 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router";
+import { GetHospitalList } from "../../services/userServices";
+import axios from "axios";
+import { myAxios } from "../../services/Helper";
+import { loggedOut } from "../../auth/auth";
 
 function ViewHospital() {
   const navigate = useNavigate();
+
+  const [hospitalList, setHospitalList] = useState([]);
+
+  useEffect(() => {
+    myAxios.get("/api/v1/admin/availableHospitals").then((response) => {
+      console.log(response.data);
+      setHospitalList(response.data);
+      console.log(hospitalList);
+    });
+  }, []);
+
+  const getList = () => {
+    GetHospitalList().then((res) => {
+      setHospitalList(res.data);
+    });
+  };
+
+  const [login, setLogin] = useState(false);
+  const logout = () => {
+    loggedOut(() => {
+      setLogin(false);
+      navigate("/");
+    });
+  };
 
   return (
     <div>
@@ -39,7 +67,7 @@ function ViewHospital() {
                 <ListItem button disablePadding>
                   <ListItemButton
                     onClick={() => {
-                      navigate("/dashboard");
+                      navigate("/admin/dashboard");
                     }}
                   >
                     <ListItemIcon></ListItemIcon>
@@ -51,7 +79,7 @@ function ViewHospital() {
                 <ListItem button disablePadding>
                   <ListItemButton
                     onClick={() => {
-                      navigate("/myprofile");
+                      navigate("/admin/myprofile");
                     }}
                   >
                     <ListItemIcon></ListItemIcon>
@@ -63,11 +91,7 @@ function ViewHospital() {
               <Divider />
               <List>
                 <ListItem button disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      navigate("/");
-                    }}
-                  >
+                  <ListItemButton onClick={logout}>
                     <ListItemIcon></ListItemIcon>
                     <ListItemText primary="Logout" />
                   </ListItemButton>
@@ -100,18 +124,20 @@ function ViewHospital() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
+                    {hospitalList.map((hospitals) => (
+                      <tr key={hospitals.id}>
+                        <td>{hospitals.id}</td>
+                        <td>{hospitals.name}</td>
+                        <td>{hospitals.email}</td>
+                        <td>{hospitals.mobile}</td>
+                        <td>{hospitals.altMobile}</td>
+                        <td>{hospitals.hospitalAddress.streetLine}</td>
+                        <td>{hospitals.hospitalAddress.state}</td>
+                        <td>{hospitals.hospitalAddress.district}</td>
+                        <td>{hospitals.hospitalAddress.city}</td>
+                        <td>{hospitals.hospitalAddress.country}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

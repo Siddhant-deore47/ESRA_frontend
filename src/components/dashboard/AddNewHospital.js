@@ -16,6 +16,7 @@ import { useState } from "react";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router";
 import { AddHospital } from "../../services/userServices";
+import { loggedOut } from "../../auth/auth";
 
 function AddNewHospital() {
   const [data, setData] = useState({
@@ -85,6 +86,14 @@ function AddNewHospital() {
         latitude: "",
         longitude: "",
       },
+    });
+  };
+
+  const [login, setLogin] = useState(false);
+  const logout = () => {
+    loggedOut(() => {
+      setLogin(false);
+      navigate("/");
     });
   };
 
@@ -171,11 +180,7 @@ function AddNewHospital() {
               <Divider />
               <List>
                 <ListItem button disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      navigate("/");
-                    }}
-                  >
+                  <ListItemButton onClick={logout}>
                     <ListItemIcon></ListItemIcon>
                     <ListItemText primary="Logout" />
                   </ListItemButton>
