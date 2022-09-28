@@ -1,27 +1,46 @@
 import React from "react";
-export const NearestHospital = () => {
+import Base from "./Base";
+import Footer from "./Footer";
+
+function NearestHospital() {
   return (
-    <>
-      <div>
-        {localStorage.getItem("nearestHospitalName")}
-        <br></br>
-        {localStorage.getItem("nearestHospitalEmail")}
-        <br></br>
-        {localStorage.getItem("nearestHospitalMobile")}
-        <br></br>
-        {localStorage.getItem("nearestHospitalAltMobile")}
-        <br></br>
-        {localStorage.getItem("nearestHospitalCity")}
-        <br></br>
-        {localStorage.getItem("nearestHospitalCountry")}
-        <br></br>
-        {localStorage.getItem("nearestHospitalState")}
-        <br></br>
-        {localStorage.getItem("nearestHospitalDistrict")}
-        <br></br>
-        {localStorage.getItem("nearestHospitalStreet")}
-        <br></br>
+    <div>
+      <Base />
+      <div className="pt-2 mt-2">
+        <table class="table table-warning table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Hospital Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Mobile No.</th>
+              <th scope="col">Alt No.</th>
+              <th scope="col">Address</th>
+              <th scope="col">State</th>
+              <th scope="col">District</th>
+              <th scope="col">City</th>
+              <th scope="col">Country</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>{localStorage.getItem("nearestHospitalName")}</td>
+              <td>{localStorage.getItem("nearestHospitalEmail")}</td>
+              <td>{localStorage.getItem("nearestHospitalMobile")}</td>
+              <td>{localStorage.getItem("nearestHospitalAltMobile")}</td>
+              <td>{localStorage.getItem("nearestHospitalCity")}</td>
+              <td>{localStorage.getItem("nearestHospitalCountry")}</td>
+              <td>{localStorage.getItem("nearestHospitalState")}</td>
+              <td>{localStorage.getItem("nearestHospitalDistrict")}</td>
+              <td>{localStorage.getItem("nearestHospitalStreet")}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </>
+      <Footer />
+    </div>
   );
-};
+}
+
+export default NearestHospital;

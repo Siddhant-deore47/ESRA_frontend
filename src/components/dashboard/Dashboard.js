@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
@@ -12,14 +12,35 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-// import InboxIcon from "@mui/icons-material/MoveToInbox";
-// import MailIcon from "@mui/icons-material/Mail";
+import AdminDashboard from "./AdminDashboard";
+import { useNavigate } from "react-router";
+import { getCurrentUser, isLoggedIn, loggedOut } from "../../auth/auth";
 
 const drawerWidth = 240;
 
 function Dashboard() {
+  const navigate = useNavigate();
+
+  const [login, setLogin] = useState(false);
+  const [user, setUser] = useState(undefined);
+
+  useEffect(() => {
+    if (localStorage.getItem("token") == null || !isLoggedIn()) {
+      navigate("/");
+    } else {
+      setLogin(isLoggedIn());
+      setUser(getCurrentUser());
+    }
+  }, [login]);
+
+  const logout = () => {
+    loggedOut(() => {
+      setLogin(false);
+      navigate("/");
+    });
+  };
+
   return (
-    // const navigate = useNavigate();
     <>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
@@ -29,7 +50,7 @@ function Dashboard() {
         >
           <Toolbar>
             <Typography variant="h4" noWrap component="div">
-              <strong>ESRA</strong> Dashboard{" "}
+              <strong>ESRA</strong> Dashboard
             </Typography>
           </Toolbar>
         </AppBar>
@@ -48,7 +69,11 @@ function Dashboard() {
           <Box sx={{ overflow: "auto" }}>
             <List>
               <ListItem button disablePadding>
-                <ListItemButton>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/admin/dashboard");
+                  }}
+                >
                   <ListItemIcon></ListItemIcon>
                   <ListItemText primary="Dashboard" />
                 </ListItemButton>
@@ -56,72 +81,21 @@ function Dashboard() {
             </List>
             <List>
               <ListItem button disablePadding>
-                <ListItemButton>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/admin/myprofile");
+                  }}
+                >
                   <ListItemIcon></ListItemIcon>
                   <ListItemText primary="My Profile" />
                 </ListItemButton>
               </ListItem>
             </List>
-            <List>
-              <ListItem button disablePadding>
-                <ListItemButton>
-                  <ListItemIcon></ListItemIcon>
-                  <ListItemText primary="Change Password" />
-                </ListItemButton>
-              </ListItem>
-            </List>
-            <List>
-              <ListItem button disablePadding>
-                <ListItemButton Link to="/vehicleinfo">
-                  <ListItemIcon></ListItemIcon>
-                  <ListItemText primary="Vehicle Information" />
-                </ListItemButton>
-              </ListItem>
-            </List>
-            <List>
-              <ListItem
-                button
-                disablePadding
-                // onClick={useNavigate("/hospital")}
-              >
-                <ListItemButton Link to="/hospital">
-                  <ListItemIcon></ListItemIcon>
-                  <ListItemText
-                    primary="Find Hospital"
-                    // onClick={<Link to={"/hospital"} />}
-                    // {/* {useNavigate("/hospital")} */}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-            <List>
-              <ListItem button disablePadding>
-                <ListItemButton Link to="/policestation">
-                  <ListItemIcon></ListItemIcon>
-                  <ListItemText primary="Find Police Station" />
-                </ListItemButton>
-              </ListItem>
-            </List>
-            <List>
-              <ListItem button disablePadding>
-                <ListItemButton Link to="/accident">
-                  <ListItemIcon></ListItemIcon>
-                  <ListItemText primary="Report Accident" />
-                </ListItemButton>
-              </ListItem>
-            </List>
-            <List>
-              <ListItem button disablePadding>
-                <ListItemButton>
-                  <ListItemIcon></ListItemIcon>
-                  <ListItemText primary="Accident History" />
-                </ListItemButton>
-              </ListItem>
-            </List>
+
             <Divider />
             <List>
-              <ListItem button disablePadding className="text-danger">
-                <ListItemButton>
+              <ListItem button disablePadding>
+                <ListItemButton onClick={logout}>
                   <ListItemIcon></ListItemIcon>
                   <ListItemText primary="Logout" />
                 </ListItemButton>
@@ -130,15 +104,9 @@ function Dashboard() {
             <Divider />
           </Box>
         </Drawer>
-
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
-
-          <h1>
-            <strong>
-              <i>Home Page</i>
-            </strong>
-          </h1>
+          <AdminDashboard />
         </Box>
       </Box>
     </>

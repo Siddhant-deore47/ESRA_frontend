@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Base from "./Base";
-import Footer from "./Footer";
-import { Login } from "../services/userServices";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { GeoLocation } from "./GeoLocation";
-import { doLogged, doLogin } from "../auth/auth";
+import { Login } from "../services/userServices";
+import { doLogin } from "../auth/auth";
+import Footer from "./Footer";
 
 const SignIn = () => {
   const [data, setData] = useState({
@@ -32,39 +30,7 @@ const SignIn = () => {
     });
   };
 
-  // const config = {
-  //   headers: {
-  //     Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //   },
-  // };
-
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("token") != null) {
-  //     loadUserDetails();
-  //     setTimeout(() => {}, 800);
-  //   } else {
-  //   }
-  // }, []);
-
-  // const loadUserDetails = () => {
-  //   axios
-  //     .get(`http://localhost:8080/api/v1/current-user`, config)
-  //     .then((response) => {
-  //       console.log(response.data.username);
-  //       if (response.data.authorities.authority.includes("ROLE_ADMIN")) {
-  //         navigate("/dashboard/");
-  //       } else {
-  //         navigate("/register/");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       alert("Token invalid, you've been logged out!");
-  //       navigate("/signin");
-  //     });
-  // };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -79,16 +45,17 @@ const SignIn = () => {
       .then((responseData) => {
         console.log("Logged In !");
         toast.success("Logged In !");
-        console.log(responseData);
+        console.log(responseData.token);
 
         doLogin(responseData, () => {
+          localStorage.setItem("token", responseData.token);
           console.log("data saved");
           navigate("/admin/dashboard");
         });
       })
       .catch((error) => {
         console.log(error);
-        if (error.response.status == 400 || error.response.status == 404)
+        if (error.response.status === 400 || error.response.status === 404)
           toast.error(error.response.data.message);
         else {
           toast.error("Error");
@@ -106,7 +73,7 @@ const SignIn = () => {
             <div className="container h-100">
               <div className="row d-flex justify-content-center align-items-center h-80">
                 <div className="col-sm-6">
-                  <div className="card" style={{ borderradius: "15px" }}>
+                  <div className="card" style={{ borderRadius: "15px" }}>
                     <div className="card-body p-2">
                       <h2 className="text-uppercase text-center mb-4">
                         Sign In
@@ -159,12 +126,6 @@ const SignIn = () => {
                           </button>
                         </div>
                       </form>
-
-                      {/* <div>
-                        {location.loaded
-                          ? JSON.stringify(location.coordinates)
-                          : "Location Not Available"}
-                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -173,7 +134,6 @@ const SignIn = () => {
           </div>
         </section>
       </div>
-
       <p className="p-1"></p>
       <Footer />
     </div>

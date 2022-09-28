@@ -1,9 +1,8 @@
 import { useState } from "react";
 import Base from "./Base";
 import Footer from "./Footer";
-import { register1 } from "../services/userServices";
-// import { register1 } from "../services/user-services";
 import { toast } from "react-toastify";
+import { register1 } from "../services/userServices";
 
 const Register = () => {
   const [data, setData] = useState({

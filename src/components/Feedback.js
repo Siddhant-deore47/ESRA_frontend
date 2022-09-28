@@ -1,6 +1,5 @@
 import Base from "./Base";
 import Footer from "./Footer";
-
 function Feedback() {
   return (
     <div>
@@ -11,7 +10,7 @@ function Feedback() {
           <strong>Feedback</strong>
         </h3>
       </div>
-      <p class="p-2"></p>
+
       <div>
         <section class="vh-80">
           <div class="container h-90">

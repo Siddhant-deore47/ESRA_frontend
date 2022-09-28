@@ -13,12 +13,12 @@ export const doLogin = (data, next) => {
 };
 
 export const loggedOut = (next) => {
-  localStorage.removeItem("data");
+  localStorage.clear();
   next();
 };
 export const getCurrentUser = () => {
   if (isLoggedIn()) {
-    return JSON.stringify(localStorage.getItem("data")).username;
+    return JSON.parse(localStorage.getItem("data")).username;
   } else {
     return undefined;
   }
