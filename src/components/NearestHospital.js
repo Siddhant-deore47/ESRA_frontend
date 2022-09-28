@@ -29,11 +29,11 @@ function NearestHospital() {
               <td>{localStorage.getItem("nearestHospitalEmail")}</td>
               <td>{localStorage.getItem("nearestHospitalMobile")}</td>
               <td>{localStorage.getItem("nearestHospitalAltMobile")}</td>
-              <td>{localStorage.getItem("nearestHospitalCity")}</td>
-              <td>{localStorage.getItem("nearestHospitalCountry")}</td>
+              <td>{localStorage.getItem("nearestHospitalStreet")}</td>
               <td>{localStorage.getItem("nearestHospitalState")}</td>
               <td>{localStorage.getItem("nearestHospitalDistrict")}</td>
-              <td>{localStorage.getItem("nearestHospitalStreet")}</td>
+              <td>{localStorage.getItem("nearestHospitalCity")}</td>
+              <td>{localStorage.getItem("nearestHospitalCountry")}</td>
             </tr>
           </tbody>
         </table>

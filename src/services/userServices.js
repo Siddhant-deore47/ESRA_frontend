@@ -25,6 +25,11 @@ export const GetHospitalList = () => {
     .get("/api/v1/admin/availableHospitals")
     .then((response) => response.data);
 };
+export const SubmitFeedback = (data) => {
+  return myAxios
+    .post("/api/v1/addFeedback", data)
+    .then((response) => response.data);
+};
 export const AddPoliceStation = (data) => {
   return myAxios
     .post("/api/v1/admin/addNewPoliceStation", data)

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
@@ -14,12 +14,32 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { useNavigate } from "react-router";
 import { Container } from "@mui/system";
+import { getCurrentUser, isLoggedIn, loggedOut } from "../../auth/auth";
 //import FormFragment from "../fragments/FormFragment";
 // import InboxIcon from "@mui/icons-material/MoveToInbox";
 // import MailIcon from "@mui/icons-material/Mail";
 
 function MyProfile() {
   const navigate = useNavigate();
+
+  const [login, setLogin] = useState(false);
+  const [user, setUser] = useState(undefined);
+
+  useEffect(() => {
+    if (localStorage.getItem("token") == null || !isLoggedIn()) {
+      navigate("/");
+    } else {
+      setLogin(isLoggedIn());
+      setUser(getCurrentUser());
+    }
+  }, [login]);
+
+  const logout = () => {
+    loggedOut(() => {
+      setLogin(false);
+      navigate("/");
+    });
+  };
 
   return (
     <>
@@ -66,11 +86,7 @@ function MyProfile() {
             <Divider />
             <List>
               <ListItem button disablePadding>
-                <ListItemButton
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
+                <ListItemButton onClick={logout}>
                   <ListItemIcon></ListItemIcon>
                   <ListItemText primary="Logout" />
                 </ListItemButton>
@@ -91,48 +107,31 @@ function MyProfile() {
                       <div className="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
                         <div className="row align-items-end">
                           <div className="col-lg-6 mb-4 mb-lg-0">
-                            {/* <img
+                            <img
+                              className="mx-5"
                               src="https://bootdey.com/img/Content/avatar/avatar7.png"
                               alt="img"
-                            /> */}
+                            />
                           </div>
                           <div className="col-lg-6 px-xl-10">
-                            <div className="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
-                              <h3 className="h2 text-white mb-0">
-                                John mark Doe Kyzer
-                              </h3>
-                              <span className="text-danger">Coach</span>
-                            </div>
                             <ul className="list-unstyled mb-1-9">
                               <li className="mb-2 mb-xl-3 display-28">
                                 <span className="display-26 text-danger me-2 font-weight-600">
-                                  Position:
+                                  Username:
                                 </span>
-                                Coach
+                                {user}
                               </li>
                               <li className="mb-2 mb-xl-3 display-28">
                                 <span className="display-26 text-secondary me-2 font-weight-600">
-                                  Experience:
+                                  Role:
                                 </span>
-                                10 Years
+                                Admin
                               </li>
                               <li className="mb-2 mb-xl-3 display-28">
                                 <span className="display-26 text-secondary me-2 font-weight-600">
                                   Email:
                                 </span>
-                                edith@mail.com
-                              </li>
-                              <li className="mb-2 mb-xl-3 display-28">
-                                <span className="display-26 text-secondary me-2 font-weight-600">
-                                  Website:
-                                </span>
-                                www.example.com
-                              </li>
-                              <li className="display-28">
-                                <span className="display-26 text-secondary me-2 font-weight-600">
-                                  Phone:
-                                </span>
-                                507 - 541 - 4567
+                                {user}
                               </li>
                             </ul>
                           </div>

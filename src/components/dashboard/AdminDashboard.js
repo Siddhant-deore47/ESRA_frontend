@@ -1,15 +1,35 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { getCurrentUser, isLoggedIn, loggedOut } from "../../auth/auth";
 
 function AdminDashboard() {
   const navigate = useNavigate();
-  //   let { adminId, firstName } = this.state;
+
+  const [login, setLogin] = useState(false);
+  const [user, setUser] = useState(undefined);
+
+  useEffect(() => {
+    if (localStorage.getItem("token") == null || !isLoggedIn()) {
+      navigate("/");
+    } else {
+      setLogin(isLoggedIn());
+      setUser(getCurrentUser());
+    }
+  }, [login]);
+
+  const logout = () => {
+    loggedOut(() => {
+      setLogin(false);
+      navigate("/");
+    });
+  };
+
   return (
     <>
       <div className="container">
         <div className="row my-3">
           <div className="col-sm-6">
-            <h2 className="text-capitalize">Hello </h2>
+            <h2 className="text-capitalize">Hello,{user} </h2>
           </div>
           <div className="col-sm-6"></div>
         </div>
