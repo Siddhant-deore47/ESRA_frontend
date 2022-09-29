@@ -6,6 +6,7 @@ export const isLoggedIn = () => {
     return false;
   }
 };
+//Checking admin
 export const isAdminLoggedIn = () => {
   let data = JSON.parse(localStorage.getItem("data")).role;
   if (data != null && data == "ROLE_ADMIN") {
