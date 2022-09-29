@@ -1,6 +1,11 @@
 import React, { Component, useEffect, useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import { getCurrentUser, isLoggedIn, loggedOut } from "../../auth/auth";
+import {
+  getCurrentUser,
+  isAdminLoggedIn,
+  isLoggedIn,
+  loggedOut,
+} from "../../auth/auth";
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -9,10 +14,10 @@ function AdminDashboard() {
   const [user, setUser] = useState(undefined);
 
   useEffect(() => {
-    if (localStorage.getItem("token") == null || !isLoggedIn()) {
+    if (localStorage.getItem("token") == null || !isAdminLoggedIn()) {
       navigate("/");
     } else {
-      setLogin(isLoggedIn());
+      setLogin(isAdminLoggedIn());
       setUser(getCurrentUser());
     }
   }, [login]);

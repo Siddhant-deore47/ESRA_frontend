@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Reported } from "../auth/auth";
 import { ReportAccidents } from "../services/userServices";
 import Base from "./Base";
 import Footer from "./Footer";
@@ -88,7 +89,7 @@ function ReportAccident() {
           "nearestHospitalStreet",
           responseData.hospitalAddress.streetLine
         );
-        navigate("/nearestHospital");
+        navigate("/securedpage/nearestHospital");
       })
       .catch((error) => {
         console.log(error);

@@ -12,23 +12,21 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-import AdminDashboard from "./AdminDashboard";
 import { useNavigate } from "react-router";
-import { getCurrentUser, isAdminLoggedIn, loggedOut } from "../../auth/auth";
-
+import { getCurrentUser, isHospitalLoggedIn, loggedOut } from "../../auth/auth";
 const drawerWidth = 240;
 
-function Dashboard() {
+function HospitalDash() {
   const navigate = useNavigate();
 
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState(undefined);
 
   useEffect(() => {
-    if (localStorage.getItem("token") == null || !isAdminLoggedIn()) {
+    if (localStorage.getItem("token") == null || !isHospitalLoggedIn()) {
       navigate("/");
     } else {
-      setLogin(isAdminLoggedIn());
+      setLogin(isHospitalLoggedIn());
       setUser(getCurrentUser());
     }
   }, [login]);
@@ -47,10 +45,11 @@ function Dashboard() {
         <AppBar
           position="fixed"
           sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          style={{ background: "#dc3545" }}
         >
           <Toolbar>
             <Typography variant="h4" noWrap component="div">
-              <strong>ESRA</strong> Dashboard
+              <strong>Hospital</strong> Dashboard
             </Typography>
           </Toolbar>
         </AppBar>
@@ -71,11 +70,11 @@ function Dashboard() {
               <ListItem button disablePadding>
                 <ListItemButton
                   onClick={() => {
-                    navigate("/admin/dashboard");
+                    navigate("/hospital/dashboard");
                   }}
                 >
                   <ListItemIcon></ListItemIcon>
-                  <ListItemText primary="Dashboard" />
+                  <ListItemText primary="Hospital Dashboard" />
                 </ListItemButton>
               </ListItem>
             </List>
@@ -83,7 +82,7 @@ function Dashboard() {
               <ListItem button disablePadding>
                 <ListItemButton
                   onClick={() => {
-                    navigate("/admin/myprofile");
+                    navigate("/hospital/myprofile");
                   }}
                 >
                   <ListItemIcon></ListItemIcon>
@@ -106,11 +105,10 @@ function Dashboard() {
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
-          <AdminDashboard />
         </Box>
       </Box>
     </>
   );
 }
 
-export default Dashboard;
+export default HospitalDash;

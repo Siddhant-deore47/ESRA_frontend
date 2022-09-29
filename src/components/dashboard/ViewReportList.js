@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
@@ -13,9 +13,28 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router";
+import { loggedOut } from "../../auth/auth";
+import { myAxios } from "../../services/Helper";
 
 function ViewReportList() {
   const navigate = useNavigate();
+  const [reportList, setReportList] = useState([]);
+
+  useEffect(() => {
+    myAxios.get("/api/v1/admin/accidentHistory").then((response) => {
+      console.log(response.data);
+      setReportList(response.data);
+      console.log(reportList);
+    });
+  }, []);
+
+  const [login, setLogin] = useState(false);
+  const logout = () => {
+    loggedOut(() => {
+      setLogin(false);
+      navigate("/");
+    });
+  };
 
   return (
     <div>
@@ -39,7 +58,7 @@ function ViewReportList() {
                 <ListItem button disablePadding>
                   <ListItemButton
                     onClick={() => {
-                      navigate("/dashboard");
+                      navigate("/admin/dashboard");
                     }}
                   >
                     <ListItemIcon></ListItemIcon>
@@ -51,7 +70,7 @@ function ViewReportList() {
                 <ListItem button disablePadding>
                   <ListItemButton
                     onClick={() => {
-                      navigate("/myprofile");
+                      navigate("/admin/myprofile");
                     }}
                   >
                     <ListItemIcon></ListItemIcon>
@@ -63,11 +82,7 @@ function ViewReportList() {
               <Divider />
               <List>
                 <ListItem button disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      navigate("/");
-                    }}
-                  >
+                  <ListItemButton onClick={logout}>
                     <ListItemIcon></ListItemIcon>
                     <ListItemText primary="Logout" />
                   </ListItemButton>
@@ -96,14 +111,16 @@ function ViewReportList() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                    </tr>
+                    {reportList.map((report) => (
+                      <tr key={report.id}>
+                        <td>{report.id}</td>
+                        <td>{report.username}</td>
+                        <td>{report.vehicalNo}</td>
+                        <td>{report.coordinates.latitude}</td>
+                        <td>{report.coordinates.longitude}</td>
+                        <td>{report.passengerCount}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

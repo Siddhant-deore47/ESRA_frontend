@@ -1,7 +1,7 @@
 import React from "react";
 //import HomePage from './HomePage'
-import {NavLink} from "react-router-dom";
- 
+import { NavLink } from "react-router-dom";
+
 function Base() {
   return (
     <div>
@@ -38,11 +38,11 @@ function Base() {
                   Sign In
                 </NavLink>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <NavLink className="nav-link px-2" to="/register">
                   Register
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

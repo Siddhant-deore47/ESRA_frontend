@@ -13,23 +13,24 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 import { useNavigate } from "react-router";
-import { Container } from "@mui/system";
-import { getCurrentUser, isAdminLoggedIn, loggedOut } from "../../auth/auth";
-//import FormFragment from "../fragments/FormFragment";
-// import InboxIcon from "@mui/icons-material/MoveToInbox";
-// import MailIcon from "@mui/icons-material/Mail";
+import {
+  getCurrentUser,
+  isHospitalLoggedIn,
+  isLoggedIn,
+  loggedOut,
+} from "../../auth/auth";
 
-function MyProfile() {
+function HMyProfile() {
   const navigate = useNavigate();
 
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState(undefined);
 
   useEffect(() => {
-    if (localStorage.getItem("token") == null || !isAdminLoggedIn()) {
+    if (localStorage.getItem("token") == null || !isHospitalLoggedIn()) {
       navigate("/");
     } else {
-      setLogin(isAdminLoggedIn());
+      setLogin(isHospitalLoggedIn());
       setUser(getCurrentUser());
     }
   }, [login]);
@@ -48,10 +49,11 @@ function MyProfile() {
         <AppBar
           position="fixed"
           sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          style={{ background: "#dc3545" }}
         >
           <Toolbar>
             <Typography variant="h4" noWrap component="div">
-              <strong>ESRA</strong> Dashboard
+              <strong>Hospital</strong> Dashboard
             </Typography>
           </Toolbar>
         </AppBar>
@@ -62,7 +64,7 @@ function MyProfile() {
               <ListItem button disablePadding>
                 <ListItemButton
                   onClick={() => {
-                    navigate("/admin/dashboard");
+                    navigate("/hospital/dashboard");
                   }}
                 >
                   <ListItemIcon></ListItemIcon>
@@ -74,7 +76,7 @@ function MyProfile() {
               <ListItem button disablePadding>
                 <ListItemButton
                   onClick={() => {
-                    navigate("/admin/myprofile");
+                    navigate("/hospital/myprofile");
                   }}
                 >
                   <ListItemIcon></ListItemIcon>
@@ -109,7 +111,7 @@ function MyProfile() {
                           <div className="col-lg-6 mb-4 mb-lg-0">
                             <img
                               className="mx-5"
-                              src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxErM4Uz55oxcH3UJ5UlpI2KgIozc8AEK6Iw&usqp=CAU"
                               alt="img"
                             />
                           </div>
@@ -125,7 +127,7 @@ function MyProfile() {
                                 <span className="display-26 text-secondary me-2 font-weight-600">
                                   Role:
                                 </span>
-                                Admin
+                                Hospital
                               </li>
                               <li className="mb-2 mb-xl-3 display-28">
                                 <span className="display-26 text-secondary me-2 font-weight-600">
@@ -149,4 +151,4 @@ function MyProfile() {
   );
 }
 
-export default MyProfile;
+export default HMyProfile;

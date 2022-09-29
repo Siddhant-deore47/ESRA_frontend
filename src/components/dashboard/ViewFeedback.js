@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
@@ -13,9 +13,28 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router";
+import { loggedOut } from "../../auth/auth";
+import { myAxios } from "../../services/Helper";
 
 function ViewFeedback() {
   const navigate = useNavigate();
+  const [feedbackList, setFeedbackList] = useState([]);
+
+  useEffect(() => {
+    myAxios.get("/api/v1/admin/feedback").then((response) => {
+      console.log(response.data);
+      setFeedbackList(response.data);
+      console.log(feedbackList);
+    });
+  }, []);
+
+  const [login, setLogin] = useState(false);
+  const logout = () => {
+    loggedOut(() => {
+      setLogin(false);
+      navigate("/");
+    });
+  };
 
   return (
     <div>
@@ -39,7 +58,7 @@ function ViewFeedback() {
                 <ListItem button disablePadding>
                   <ListItemButton
                     onClick={() => {
-                      navigate("/dashboard");
+                      navigate("/admin/dashboard");
                     }}
                   >
                     <ListItemIcon></ListItemIcon>
@@ -51,7 +70,7 @@ function ViewFeedback() {
                 <ListItem button disablePadding>
                   <ListItemButton
                     onClick={() => {
-                      navigate("/myprofile");
+                      navigate("/admin/myprofile");
                     }}
                   >
                     <ListItemIcon></ListItemIcon>
@@ -63,11 +82,7 @@ function ViewFeedback() {
               <Divider />
               <List>
                 <ListItem button disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      navigate("/");
-                    }}
-                  >
+                  <ListItemButton onClick={logout}>
                     <ListItemIcon></ListItemIcon>
                     <ListItemText primary="Logout" />
                   </ListItemButton>
@@ -90,16 +105,20 @@ function ViewFeedback() {
                       <th scope="col">#</th>
                       <th scope="col">Name</th>
                       <th scope="col">Email</th>
+                      <th scope="col">Mobile No.</th>
                       <th scope="col">Message</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
+                    {feedbackList.map((feedback) => (
+                      <tr key={feedback.id}>
+                        <td>{feedback.id}</td>
+                        <td>{feedback.name}</td>
+                        <td>{feedback.email}</td>
+                        <td>{feedback.mobile}</td>
+                        <td>{feedback.comment}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

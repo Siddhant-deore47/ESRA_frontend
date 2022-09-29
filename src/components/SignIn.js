@@ -64,6 +64,102 @@ const SignIn = () => {
   };
 
   return (
+    <>
+      <Base />
+      <div>
+        {/* <section className="h-100 gradient-form"> */}
+        <p className="p-2"></p>
+        <div className="container py-5 h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-xl-10">
+              <div className="card rounded-3 text-black">
+                <div className="row g-0">
+                  <div className="col-lg-6">
+                    <div className="card-body p-md-5 mx-md-4">
+                      <div className="text-center">
+                        <img
+                          className="image_sign"
+                          src="https://www.pngitem.com/pimgs/m/213-2133765_24-hour-service-24x7-emergency-hd-png-download.png
+                          "
+                          alt="logo"
+                        />
+                        <h4 className="mt-1 mb-5 pb-1">Safety First !</h4>
+                      </div>
+
+                      <form onSubmit={handleFormSubmit} method="POST">
+                        <h5>
+                          <strong>Please login to your account</strong>
+                        </h5>
+
+                        <div className="form-outline mb-4">
+                          <input
+                            type="email"
+                            id="form2Example11"
+                            name="username"
+                            className="form-control"
+                            placeholder="Enter Email address"
+                            value={data.username}
+                            onChange={InputEvent}
+                            required
+                          />
+                          <label className="form-label" for="form2Example11">
+                            Username
+                          </label>
+                        </div>
+
+                        <div className="form-outline mb-4">
+                          <input
+                            type="password"
+                            id="form2Example22"
+                            name="password"
+                            className="form-control"
+                            placeholder="Enter Password"
+                            value={data.password}
+                            onChange={InputEvent}
+                            required
+                          />
+                          <label className="form-label" for="form2Example22">
+                            Password
+                          </label>
+                        </div>
+
+                        <div className="text-center pt-1 mb-5 pb-1">
+                          <button
+                            className="btn btn-primary btn-block fa-lg  mb-3 "
+                            type="submit"
+                          >
+                            <strong>Log in</strong>
+                          </button>
+                          <button
+                            type="reset"
+                            onClick={resetData}
+                            className="btn btn-danger btn-block fa-lg  mb-3 mx-3"
+                          >
+                            <strong>clear</strong>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div className="col-lg-6 d-flex align-items-center gradient-custom-2 display-6">
+                    <div className="text-dark px-3 py-4 p-md-5 mx-md-4">
+                      <h1 className="mb-4">We are Happy to Help You</h1>
+                      <p className="small mb-0">
+                        You are on India's Fastest Platform for Accidential Help
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* </section> */}
+      </div>
+      <p className="p-1"></p>
+      <Footer />
+    </>
+    /*
     <div>
       <Base />
       <p className="p-2"></p>
@@ -137,6 +233,7 @@ const SignIn = () => {
       <p className="p-1"></p>
       <Footer />
     </div>
+    */
   );
 };
 

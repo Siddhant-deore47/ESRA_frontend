@@ -1,130 +1,61 @@
-function Footer() {
-  return (
-    <div>
-      <div className="pt-5 mt-2">
-        <div className="container-fluid p-1 my-2 bg-dark text-white fixed-bottom">
-          <p style={{ textAlign: "center", paddingTop: "15px" }}>
-            All Rights Are Reserved Copyright@CDAC Mumbai
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// import {
-//   MDBCol,
-//   MDBContainer,
-//   MDBFooter,
-//   MDBIcon,
-//   MDBRow,
-// } from "mdb-react-ui-kit";
-// import React from "react";
-// // import {
-// //   MDBFooter,
-// //   MDBContainer,
-// //   MDBRow,
-// //   MDBCol,
-// //   MDBIcon,
-// // } from "mdb-react-ui-kit";
-
 // function Footer() {
 //   return (
-//     <MDBFooter bgColor="dark" className="text-center text-lg-start text-muted">
-//       <section className="">
-//         <MDBContainer className="text-center text-md-start">
-//           <MDBRow className="mt-1">
-//             <MDBCol md="3" lg="4" xl="3" className="mx-auto mb-4">
-//               <h6 className="text-uppercase fw-bold mb-4">
-//                 <MDBIcon icon="gem" className="me-3" />
-//                 Company name
-//               </h6>
-//               <p>
-//                 Here you can use rows and columns to organize your footer
-//                 content. Lorem ipsum dolor sit amet, consectetur adipisicing
-//                 elit.
-//               </p>
-//             </MDBCol>
-
-//             <MDBCol md="2" lg="2" xl="2" className="mx-auto mb-4">
-//               <h6 className="text-uppercase fw-bold mb-4">Products</h6>
-//               <p>
-//                 <a href="#!" className="text-reset">
-//                   Angular
-//                 </a>
-//               </p>
-//               <p>
-//                 <a href="#!" className="text-reset">
-//                   React
-//                 </a>
-//               </p>
-//               <p>
-//                 <a href="#!" className="text-reset">
-//                   Vue
-//                 </a>
-//               </p>
-//               <p>
-//                 <a href="#!" className="text-reset">
-//                   Laravel
-//                 </a>
-//               </p>
-//             </MDBCol>
-
-//             <MDBCol md="3" lg="2" xl="2" className="mx-auto mb-4">
-//               <h6 className="text-uppercase fw-bold mb-4">Useful links</h6>
-//               <p>
-//                 <a href="#!" className="text-reset">
-//                   Pricing
-//                 </a>
-//               </p>
-//               <p>
-//                 <a href="#!" className="text-reset">
-//                   Settings
-//                 </a>
-//               </p>
-//               <p>
-//                 <a href="#!" className="text-reset">
-//                   Orders
-//                 </a>
-//               </p>
-//               <p>
-//                 <a href="#!" className="text-reset">
-//                   Help
-//                 </a>
-//               </p>
-//             </MDBCol>
-
-//             <MDBCol md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
-//               <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
-//               <p>
-//                 <MDBIcon icon="home" className="me-2" />
-//                 New York, NY 10012, US
-//               </p>
-//               <p>
-//                 <MDBIcon icon="envelope" className="me-3" />
-//                 info@example.com
-//               </p>
-//               <p>
-//                 <MDBIcon icon="phone" className="me-3" /> + 01 234 567 88
-//               </p>
-//               <p>
-//                 <MDBIcon icon="print" className="me-3" /> + 01 234 567 89
-//               </p>
-//             </MDBCol>
-//           </MDBRow>
-//         </MDBContainer>
-//       </section>
-
-//       <div
-//         className="text-center p-4"
-//         style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
-//       >
-//         © 2022 Copyright:
-//         <a className="text-reset fw-bold" href="https://mdbootstrap.com/">
-//           CDAC Mumbai
-//         </a>
+//     <div>
+//       <div className="pt-5 mt-2">
+//         <div className="container-fluid p-1 my-2 bg-dark text-white fixed-bottom">
+//           <p style={{ textAlign: "center", paddingTop: "15px" }}>
+//             All Rights Are Reserved Copyright@CDAC Mumbai
+//           </p>
+//         </div>
 //       </div>
-//     </MDBFooter>
+//     </div>
 //   );
 // }
+
+import { MDBCol, MDBContainer, MDBFooter, MDBRow } from "mdb-react-ui-kit";
+import React from "react";
+
+function Footer() {
+  return (
+    <MDBFooter bgColor="dark" className="text-center text-md-start text-muted">
+      <MDBContainer className="text-center text-md-start">
+        <MDBRow className="mt-4">
+          <MDBCol md="3" lg="4" xl="3" className="mx-auto mb-4 mt-5">
+            <h4 className="text-light text-uppercase fw-bold mb-4">ESRA</h4>
+            <p>
+              We believe we can leverage the information and technology
+              available to us, along with a shared goal of making our roads
+              safer, to create a world where no victim is left unattended after
+              an accident.
+            </p>
+          </MDBCol>
+
+          <MDBCol md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4 mt-5">
+            <h6 className="text-light text-uppercase fw-bold mb-4">Contact</h6>
+            <p>Mumbai 400001</p>
+            <p>
+              <a
+                href="https://www.google.co.in/"
+                className="text-reset fw-bold"
+              >
+                cdacmumbai@gmail.com
+              </a>
+            </p>
+            <p>+ 91-70205-65850</p>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+
+      <div
+        className="text-light text-center p-3 "
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
+      >
+        © 2022 Copyright:
+        <a className="text-reset fw-bold" href="https://www.google.co.in/">
+          CDAC Mumbai
+        </a>
+      </div>
+    </MDBFooter>
+  );
+}
 export default Footer;

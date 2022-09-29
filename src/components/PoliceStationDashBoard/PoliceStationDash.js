@@ -12,23 +12,30 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-import AdminDashboard from "./AdminDashboard";
 import { useNavigate } from "react-router";
-import { getCurrentUser, isAdminLoggedIn, loggedOut } from "../../auth/auth";
+import {
+  getCurrentUser,
+  isPoliceStationLoggedIn,
+  loggedOut,
+} from "../../auth/auth";
+import { myAxios } from "../../services/Helper";
+import { toast } from "react-toastify";
+import { Container } from "react-bootstrap";
 
 const drawerWidth = 240;
 
-function Dashboard() {
+function PoliceStationDash() {
   const navigate = useNavigate();
 
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState(undefined);
+  const [accidentList, setAccidentList] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("token") == null || !isAdminLoggedIn()) {
+    if (localStorage.getItem("token") == null || !isPoliceStationLoggedIn()) {
       navigate("/");
     } else {
-      setLogin(isAdminLoggedIn());
+      setLogin(isPoliceStationLoggedIn());
       setUser(getCurrentUser());
     }
   }, [login]);
@@ -39,6 +46,17 @@ function Dashboard() {
       navigate("/");
     });
   };
+  const getList = () => {
+    myAxios
+      .get(`/api/v1/policestation/viewnewaccidents/${user}`)
+      .then((response) => {
+        console.log(response.data);
+        setAccidentList(response.data);
+      })
+      .catch((error) => {
+        toast.error("error");
+      });
+  };
 
   return (
     <>
@@ -47,10 +65,11 @@ function Dashboard() {
         <AppBar
           position="fixed"
           sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          style={{ background: "#2E3B55" }}
         >
           <Toolbar>
             <Typography variant="h4" noWrap component="div">
-              <strong>ESRA</strong> Dashboard
+              <strong>Police Station</strong> Dashboard
             </Typography>
           </Toolbar>
         </AppBar>
@@ -71,11 +90,11 @@ function Dashboard() {
               <ListItem button disablePadding>
                 <ListItemButton
                   onClick={() => {
-                    navigate("/admin/dashboard");
+                    navigate("/policestation/dashboard");
                   }}
                 >
                   <ListItemIcon></ListItemIcon>
-                  <ListItemText primary="Dashboard" />
+                  <ListItemText primary="Police Station Dashboard" />
                 </ListItemButton>
               </ListItem>
             </List>
@@ -83,7 +102,7 @@ function Dashboard() {
               <ListItem button disablePadding>
                 <ListItemButton
                   onClick={() => {
-                    navigate("/admin/myprofile");
+                    navigate("/policestation/myprofile");
                   }}
                 >
                   <ListItemIcon></ListItemIcon>
@@ -106,11 +125,45 @@ function Dashboard() {
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
-          <AdminDashboard />
+          <Container>
+            <h1 className="text-align-center display-6">
+              <strong> Reported List</strong>
+              <br />
+              <button className="btn btn-primary" onClick={getList}>
+                <strong>Get List</strong>
+              </button>
+            </h1>
+            <div className="pt-2 mt-2">
+              <table class="table table-danger table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Vehicle No.</th>
+                    <th scope="col">Latitude</th>
+                    <th scope="col">Longitude</th>
+                    <th scope="col">Passenger</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {accidentList.map((report) => (
+                    <tr key={report.id}>
+                      <td>{report.id}</td>
+                      <td>{report.username}</td>
+                      <td>{report.vehicalNo}</td>
+                      <td>{report.coordinates.latitude}</td>
+                      <td>{report.coordinates.longitude}</td>
+                      <td>{report.passengerCount}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Container>
         </Box>
       </Box>
     </>
   );
 }
 
-export default Dashboard;
+export default PoliceStationDash;
