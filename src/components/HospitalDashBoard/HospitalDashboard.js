@@ -51,7 +51,7 @@ function HospitalDashboard() {
               <ListItem button disablePadding>
                 <ListItemButton
                   onClick={() => {
-                    navigate("/hospitaldashboard");
+                    navigate("/hospital/hospital");
                   }}
                 >
                   <ListItemIcon></ListItemIcon>
@@ -63,7 +63,7 @@ function HospitalDashboard() {
               <ListItem button disablePadding>
                 <ListItemButton
                   onClick={() => {
-                    navigate("/myprofile");
+                    navigate("/hospital/myprofile");
                   }}
                 >
                   <ListItemIcon></ListItemIcon>
@@ -75,11 +75,7 @@ function HospitalDashboard() {
             <Divider />
             <List>
               <ListItem button disablePadding>
-                <ListItemButton
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
+                <ListItemButton onClick={logout}>
                   <ListItemIcon></ListItemIcon>
                   <ListItemText primary="Logout" />
                 </ListItemButton>

@@ -3,7 +3,12 @@ import Base from "./Base";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../services/userServices";
-import { doLogin } from "../auth/auth";
+import {
+  adminData,
+  doLogin,
+  hospitalData,
+  policeStationData,
+} from "../auth/auth";
 import Footer from "./Footer";
 
 const SignIn = () => {
@@ -46,12 +51,27 @@ const SignIn = () => {
         console.log("Logged In !");
         toast.success("Logged In !");
         console.log(responseData.token);
+        console.log(responseData.role);
 
-        doLogin(responseData, () => {
-          localStorage.setItem("token", responseData.token);
-          console.log("data saved");
-          navigate("/admin/dashboard");
-        });
+        localStorage.setItem("token", responseData.token);
+        if (responseData.role === "ROLE_ADMIN") {
+          adminData(responseData, () => {
+            console.log(responseData);
+            navigate("/admin/dashboard");
+          });
+        } else if (responseData.role === "ROLE_HOSPITAL") {
+          hospitalData(responseData, () => {
+            navigate("/hospital/dashboard");
+          });
+        } else if (responseData.role === "ROLE_POLICESTATION") {
+          policeStationData(responseData, () => {
+            navigate("/policestation/dashboard");
+          });
+        }
+        // doLogin(responseData, () => {
+        //   console.log("data saved");
+        //   navigate("/admin/dashboard");
+        // });
       })
       .catch((error) => {
         console.log(error);

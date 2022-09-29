@@ -168,7 +168,7 @@ function AddNewHospital() {
                 <ListItem button disablePadding>
                   <ListItemButton
                     onClick={() => {
-                      navigate("/myprofile");
+                      navigate("/admin/myprofile");
                     }}
                   >
                     <ListItemIcon></ListItemIcon>

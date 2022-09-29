@@ -22,14 +22,14 @@ function HospitalDash() {
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState(undefined);
 
-  useEffect(() => {
-    if (localStorage.getItem("token") == null || !isHospitalLoggedIn()) {
-      navigate("/");
-    } else {
-      setLogin(isHospitalLoggedIn());
-      setUser(getCurrentUser());
-    }
-  }, [login]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("token") == null || !isHospitalLoggedIn()) {
+  //     navigate("/");
+  //   } else {
+  //     setLogin(isHospitalLoggedIn());
+  //     setUser(getCurrentUser());
+  //   }
+  // }, []);
 
   const logout = () => {
     loggedOut(() => {
