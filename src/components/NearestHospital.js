@@ -7,7 +7,7 @@ import Footer from "./Footer";
 function NearestHospital() {
   const navigate = useNavigate();
   const resetData = () => {
-    localStorage.removeItem("nearestHospital");
+    localStorage.clear();
     navigate("/reportaccident");
   };
   return (
