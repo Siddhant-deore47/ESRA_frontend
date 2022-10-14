@@ -26,7 +26,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (localStorage.getItem("token") == null || !isAdminLoggedIn()) {
-      navigate("/");
+      navigate("/signin");
     } else {
       setLogin(isAdminLoggedIn());
       setUser(getCurrentUser());

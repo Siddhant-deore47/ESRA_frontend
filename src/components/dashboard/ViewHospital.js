@@ -31,6 +31,11 @@ function ViewHospital() {
     });
   }, []);
 
+  const remove = (id) => {
+    myAxios.get(`/api/v1/admin/deleteHospital/${id}`).then((response) => {
+      console.log(response.data);
+    });
+  };
   const [login, setLogin] = useState(false);
   const logout = () => {
     loggedOut(() => {
@@ -115,6 +120,7 @@ function ViewHospital() {
                       <th scope="col">District</th>
                       <th scope="col">City</th>
                       <th scope="col">Country</th>
+                      <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -130,6 +136,21 @@ function ViewHospital() {
                         <td>{hospitals.hospitalAddress.district}</td>
                         <td>{hospitals.hospitalAddress.city}</td>
                         <td>{hospitals.hospitalAddress.country}</td>
+                        <td>
+                          <div className="d-flex">
+                            <button className="btn btn-primary mx-2">
+                              Update
+                            </button>
+                            <button
+                              className="btn btn-danger"
+                              onClick={(e) => {
+                                remove(hospitals.id);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

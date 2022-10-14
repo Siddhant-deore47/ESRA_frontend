@@ -28,7 +28,11 @@ function ViewPoliceStation() {
       console.log(stationList);
     });
   }, []);
-
+  const remove = (id) => {
+    myAxios.get(`/api/v1/admin/deletePoliceStation/${id}`).then((response) => {
+      console.log(response.data);
+    });
+  };
   const [login, setLogin] = React.useState(false);
   const logout = () => {
     loggedOut(() => {
@@ -113,6 +117,7 @@ function ViewPoliceStation() {
                       <th scope="col">District</th>
                       <th scope="col">City</th>
                       <th scope="col">Country</th>
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -128,6 +133,21 @@ function ViewPoliceStation() {
                         <td>{stations.policeStationAddress.district}</td>
                         <td>{stations.policeStationAddress.city}</td>
                         <td>{stations.policeStationAddress.country}</td>
+                        <td>
+                          <div className="d-flex">
+                            <button className="btn btn-primary mx-2">
+                              Update
+                            </button>
+                            <button
+                              className="btn btn-danger"
+                              onClick={(e) => {
+                                remove(stations.id);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

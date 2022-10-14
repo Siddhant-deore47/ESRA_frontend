@@ -147,7 +147,7 @@ function ReportAccident() {
                     <div class="col-md-10 pb-2">
                       <input
                         class="form-control"
-                        type="text"
+                        type="number"
                         name="count"
                         placeholder="Passenger Involved"
                         onChange={InputEvent}
